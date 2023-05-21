@@ -1,0 +1,3 @@
+resources:
+  - helm-repo-operator.yaml
+  - operator.yaml
