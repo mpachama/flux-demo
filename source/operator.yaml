@@ -1,5 +1,5 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta1
-kind: GitRepository
+kind: HelmRepository
 metadata:
   name: opensearch-operator
   namespace: flux-system
@@ -8,3 +8,5 @@ spec:
   ref:
     branch: master  
   url: https://github.com/open-telemetry/opentelemetry-operator.git
+  utl: https://github.com/open-telemetry/opentelemetry-helm-charts/tree/main/charts/opentelemetry-operator
+
