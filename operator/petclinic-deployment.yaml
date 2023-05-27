@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic-from-operator
+  labels:
+    app: petclinic-from-operator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic-from-operator
+  template:
+    metadata:
+      annotations:
+        instrumentation.opentelemetry.io/inject-java: 'true'
+        sidecar.opentelemetry.io/inject: 'true'
+      labels:
+        app: petclinic-from-operator
+    spec:
+      containers:
+      - name: petclinic-from-operator
+        image: eyalkoren/pet-clinic:without-agent        
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: petclinic-from-operator
+  name: petclinic-from-operator
+  annotations:
+    service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+spec:
+  type: LoadBalancer
+  ports:
+  - name: "8080"
+    port: 8080
+  selector:
+    app: petclinic-from-operator
